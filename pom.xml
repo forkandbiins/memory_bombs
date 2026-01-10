@@ -1,0 +1,253 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>com.github.tip-aaron</groupId>
+  <artifactId>memory_bombs</artifactId>
+  <version>1.0-SNAPSHOT</version>
+  <packaging>jar</packaging>
+
+  <name>memory_bombs</name>
+
+  <licenses>
+    <license>
+      <name>MIT</name>
+      <url>https://opensource.org/license/mit</url>
+    </license>
+  </licenses>
+
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <maven.compiler.release>21</maven.compiler.release>
+    <exec.mainClass>memory_bombs.App</exec.mainClass>
+  </properties>
+
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>org.junit</groupId>
+        <artifactId>junit-bom</artifactId>
+        <version>5.11.0</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
+
+  <dependencies>
+    <!-- ===== FLATLAF ===== -->
+    <dependency>
+      <groupId>com.formdev</groupId>
+      <artifactId>flatlaf</artifactId>
+      <version>3.6.1</version>
+    </dependency>
+    <dependency>
+      <groupId>com.formdev</groupId>
+      <artifactId>flatlaf-extras</artifactId>
+      <version>3.6.2</version>
+    </dependency>
+    <!-- ===== LAYOUT ===== -->
+    <dependency>
+      <groupId>com.miglayout</groupId>
+      <artifactId>miglayout-swing</artifactId>
+      <version>11.4.2</version>
+    </dependency>
+    <!-- ===== LOMBOK ===== -->
+    <!-- https://mvnrepository.com/artifact/org.projectlombok/lombok -->
+    <dependency>
+      <groupId>org.projectlombok</groupId>
+      <artifactId>lombok</artifactId>
+      <version>1.18.42</version>
+    </dependency>
+    <!-- ===== STRINGS ===== -->
+    <!-- https://mvnrepository.com/artifact/org.apache.commons/commons-text -->
+    <dependency>
+      <groupId>org.apache.commons</groupId>
+      <artifactId>commons-text</artifactId>
+      <version>1.14.0</version>
+    </dependency>
+    <!-- https://mvnrepository.com/artifact/commons-beanutils/commons-beanutils -->
+    <dependency>
+      <groupId>commons-beanutils</groupId>
+      <artifactId>commons-beanutils</artifactId>
+      <version>1.11.0</version>
+    </dependency>
+    <!-- ===== ANNOTATIONS ===== -->
+    <dependency>
+      <groupId>org.jetbrains</groupId>
+      <artifactId>annotations</artifactId>
+      <version>24.0.1</version>
+      <scope>compile</scope>
+    </dependency>
+    <!-- ===== CLASS GRAPHS ===== -->
+    <dependency>
+      <groupId>io.github.classgraph</groupId>
+      <artifactId>classgraph</artifactId>
+      <version>4.8.179</version>
+    </dependency>
+    <!-- ===== TESTS ===== -->
+    <dependency>
+      <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter-api</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <!-- Optionally: parameterized tests support -->
+    <dependency>
+      <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter-params</artifactId>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
+
+  <build>
+    <resources>
+      <!-- Filter .properties for dynamic values
+        then exclude them on the next resource build -->
+      <resource>
+        <filtering>true</filtering>
+        <directory>src/main/resources</directory>
+        <includes>
+          <include>**/*.properties</include>
+        </includes>
+      </resource>
+      <resource>
+        <directory>src/main/resources</directory>
+        <excludes>
+          <exclude>**/*.properties</exclude>
+        </excludes>
+      </resource>
+    </resources>
+    <pluginManagement>
+      <plugins>
+        <plugin>
+          <groupId>com.diffplug.spotless</groupId>
+          <artifactId>spotless-maven-plugin</artifactId>
+          <version>2.44.4</version>
+          <configuration>
+            <upToDateChecking>
+              <enabled>true</enabled>
+            </upToDateChecking>
+            <ratchetFrom>origin/main</ratchetFrom>
+            <pom>
+              <!-- These are the defaults, you can override if you want -->
+              <includes>
+                <include>pom.xml</include>
+              </includes>
+
+              <sortPom></sortPom>
+              <!-- has its own section below -->
+
+            </pom>
+            <sql>
+              <includes>
+                <include>src/main/resources/**/*.sql</include>
+              </includes>
+            </sql>
+            <java>
+              <!-- Cleanthat will refactor your code, but it may break your style: apply it before your formatter -->
+              <cleanthat></cleanthat>
+              <googleJavaFormat>
+                <version>1.26.0</version>
+                <style>GOOGLE</style>
+                <reflowLongStrings>true</reflowLongStrings>
+                <formatJavadoc>true</formatJavadoc>
+              </googleJavaFormat>
+
+              <eclipse>
+                <!-- Optional: Enable the Sort Members feature globally. (default: false) -->
+                <sortMembersEnabled>true</sortMembersEnabled>
+                <!-- Optional: Specify the sort order of the member categories. (default: T,SF,SI,SM,F,I,C,M)
+       SF,SI,SM,F,I,C,M,T = Static Fields, Static Initializers, Static Methods, Fields, Initializers, Constructors, Methods, (Nested) Types -->
+                <sortMembersOrder>SF,SI,SM,F,I,C,M,T</sortMembersOrder>
+                <!-- Optional: Enable the reordering of fields, enum constants, and initializers. (default: true) -->
+                <sortMembersDoNotSortFields>false</sortMembersDoNotSortFields>
+                <!-- Optional: Enable reordering of members of the same category by the visibility within the category. (default: false) -->
+                <sortMembersVisibilityOrderEnabled>true</sortMembersVisibilityOrderEnabled>
+                <!-- Optional: Specify the ordering of members of the same category by the visibility within the category. (default: B,V,R,D)
+       B,R,D,V = Public, Protected, Package, Private -->
+                <sortMembersVisibilityOrder>V,D,R,B</sortMembersVisibilityOrder>
+              </eclipse>
+
+              <importOrder>
+                <wildcardsLast>true</wildcardsLast>
+                <semanticSort>true</semanticSort>
+                <order>\#,java,javax,org,com</order>
+              </importOrder>
+
+              <removeUnusedImports></removeUnusedImports>
+
+              <formatAnnotations></formatAnnotations>
+
+              <indent>
+                <tabs>true</tabs>
+                <spacesPerTab>2</spacesPerTab>
+              </indent>
+
+              <indent>
+                <spaces>true</spaces>
+                <spacesPerTab>4</spacesPerTab>
+              </indent>
+            </java>
+          </configuration>
+        </plugin>
+      </plugins>
+    </pluginManagement>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>3.14.1</version>
+        <configuration>
+          <annotationProcessorPaths>
+            <path>
+              <groupId>org.projectlombok</groupId>
+              <artifactId>lombok</artifactId>
+              <version>1.18.42</version>
+            </path>
+          </annotationProcessorPaths>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-shade-plugin</artifactId>
+        <version>3.6.1</version>
+        <configuration>
+          <filters>
+            <filter>
+              <artifact>*:*</artifact>
+              <excludes>
+                <exclude>module-info.class</exclude>
+                <exclude>META-INF/versions/9/module-info.class</exclude>
+                <exclude>META-INF/MANIFEST.MF</exclude>
+                <exclude>META-INF/LICENSE</exclude>
+              </excludes>
+            </filter>
+          </filters>
+          <transformers>
+            <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+              <mainClass>memory_bombs:App</mainClass>
+            </transformer>
+            <transformer implementation="org.apache.maven.plugins.shade.resource.AppendingTransformer">
+              <resource>META-INF/LICENSE.txt</resource>
+            </transformer>
+            <transformer implementation="org.apache.maven.plugins.shade.resource.AppendingTransformer">
+              <resource>META-INF/NOTICE.txt</resource>
+            </transformer>
+          </transformers>
+          <shadedArtifactAttached>true</shadedArtifactAttached>
+          <shadedClassifierName>launcher</shadedClassifierName>
+          <createDependencyReducedPom>false</createDependencyReducedPom>
+        </configuration>
+        <executions>
+          <execution>
+            <goals>
+              <goal>shade</goal>
+            </goals>
+            <phase>package</phase>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
+</project>
