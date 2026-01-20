@@ -47,20 +47,14 @@ public class TileHolder extends JPanel {
 
         tiles = new ArrayList<>();
 
-        for (int i = 0; i < pairsAmount * 2; i++) {
-            tiles.add(new Tile(Tile.TileType.NORMAL, i));
-        }
-        for (int i = 0; i < bombsAmount; i++) {
-            tiles.add(new Tile(Tile.TileType.BOMB));
-        }
-        for (int i = 0; i < powerUpsAmount; i++) {
-            tiles.add(new Tile(Tile.TileType.POWER_UP));
-        }
-
-        shuffleTiles();
+        populateTiles();
 
         buttons = new JButton[tiles.size()];
 
+        populateButtons();
+    }
+
+    private void populateButtons() {
         for (int i = 0; i < tiles.size(); ++i) {
             JButton btn = new JButton("?");
             final int index = i;
@@ -72,6 +66,20 @@ public class TileHolder extends JPanel {
             buttons[i] = btn;
             add(btn);
         }
+    }
+
+    private void populateTiles() {
+        for (int i = 0; i < pairsAmount * 2; i++) {
+            tiles.add(new Tile(Tile.TileType.NORMAL, i));
+        }
+        for (int i = 0; i < bombsAmount; i++) {
+            tiles.add(new Tile(Tile.TileType.BOMB));
+        }
+        for (int i = 0; i < powerUpsAmount; i++) {
+            tiles.add(new Tile(Tile.TileType.POWER_UP));
+        }
+
+        shuffleTiles();
     }
 
     private void handleClick(int index) {
@@ -122,7 +130,7 @@ public class TileHolder extends JPanel {
         tile.revealed = true;
 
         switch (tile.type) {
-            case NORMAL -> btn.setText(String.valueOf(tile.id));
+            case NORMAL -> btn.setText(String.valueOf(tile.id % pairsAmount));
             case BOMB -> btn.setText("💣");
             case POWER_UP -> btn.setText("⚡");
         }
@@ -140,8 +148,9 @@ public class TileHolder extends JPanel {
         lock = true;
 
         Timer timer = new Timer(500, e -> {
-            if (firstPick.id == second.id) {
-                // Match found
+            if (firstPick.id % pairsAmount == second.id % pairsAmount) {
+                firstButton.setEnabled(false);
+                secondBtn.setEnabled(false);
             } else {
                 hide(firstPick, firstButton);
                 hide(second, secondBtn);

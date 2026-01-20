@@ -5,6 +5,7 @@ module memory_bombs {
     requires com.formdev.flatlaf;
     requires com.formdev.flatlaf.extras;
     requires com.miglayout.swing;
+    requires lombok;
 
     exports memory_bombs;
 }
