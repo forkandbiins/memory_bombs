@@ -1,13 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>com.github.tip-aaron</groupId>
-  <artifactId>memory_bombs</artifactId>
+  <artifactId>flip_n_match</artifactId>
   <version>1.0-SNAPSHOT</version>
   <packaging>jar</packaging>
 
-  <name>memory_bombs</name>
+  <name>flip_n_match</name>
 
   <licenses>
     <license>
@@ -20,7 +22,7 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <maven.compiler.release>21</maven.compiler.release>
-    <exec.mainClass>memory_bombs.App</exec.mainClass>
+    <exec.mainClass>flip_n_match.App</exec.mainClass>
   </properties>
 
   <dependencyManagement>
@@ -145,7 +147,8 @@
               </includes>
             </sql>
             <java>
-              <!-- Cleanthat will refactor your code, but it may break your style: apply it before your formatter -->
+              <!-- Cleanthat will refactor your code, but it may break your style: apply it before
+              your formatter -->
               <cleanthat></cleanthat>
               <googleJavaFormat>
                 <version>1.26.0</version>
@@ -157,14 +160,19 @@
               <eclipse>
                 <!-- Optional: Enable the Sort Members feature globally. (default: false) -->
                 <sortMembersEnabled>true</sortMembersEnabled>
-                <!-- Optional: Specify the sort order of the member categories. (default: T,SF,SI,SM,F,I,C,M)
-       SF,SI,SM,F,I,C,M,T = Static Fields, Static Initializers, Static Methods, Fields, Initializers, Constructors, Methods, (Nested) Types -->
+                <!-- Optional: Specify the sort order of the member categories. (default:
+                T,SF,SI,SM,F,I,C,M)
+       SF,SI,SM,F,I,C,M,T = Static Fields, Static Initializers, Static Methods, Fields, Initializers,
+                Constructors, Methods, (Nested) Types -->
                 <sortMembersOrder>SF,SI,SM,F,I,C,M,T</sortMembersOrder>
-                <!-- Optional: Enable the reordering of fields, enum constants, and initializers. (default: true) -->
+                <!-- Optional: Enable the reordering of fields, enum constants, and initializers.
+                (default: true) -->
                 <sortMembersDoNotSortFields>false</sortMembersDoNotSortFields>
-                <!-- Optional: Enable reordering of members of the same category by the visibility within the category. (default: false) -->
+                <!-- Optional: Enable reordering of members of the same category by the visibility
+                within the category. (default: false) -->
                 <sortMembersVisibilityOrderEnabled>true</sortMembersVisibilityOrderEnabled>
-                <!-- Optional: Specify the ordering of members of the same category by the visibility within the category. (default: B,V,R,D)
+                <!-- Optional: Specify the ordering of members of the same category by the
+                visibility within the category. (default: B,V,R,D)
        B,R,D,V = Public, Protected, Package, Private -->
                 <sortMembersVisibilityOrder>V,D,R,B</sortMembersVisibilityOrder>
               </eclipse>
@@ -225,13 +233,16 @@
             </filter>
           </filters>
           <transformers>
-            <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-              <mainClass>memory_bombs.App</mainClass>
+            <transformer
+              implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+              <mainClass>flip_n_match.App</mainClass>
             </transformer>
-            <transformer implementation="org.apache.maven.plugins.shade.resource.AppendingTransformer">
+            <transformer
+              implementation="org.apache.maven.plugins.shade.resource.AppendingTransformer">
               <resource>META-INF/LICENSE.txt</resource>
             </transformer>
-            <transformer implementation="org.apache.maven.plugins.shade.resource.AppendingTransformer">
+            <transformer
+              implementation="org.apache.maven.plugins.shade.resource.AppendingTransformer">
               <resource>META-INF/NOTICE.txt</resource>
             </transformer>
           </transformers>
