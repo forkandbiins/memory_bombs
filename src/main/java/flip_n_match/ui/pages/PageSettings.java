@@ -166,9 +166,10 @@ public class PageSettings extends Page {
                     if (UserSettings.getInstance().getCurrentTheme() != GameTheme.DARK) {
                         UserSettings.getInstance().setTheme(GameTheme.DARK);
                     }
-                } else if (UserSettings.getInstance().getCurrentTheme() != GameTheme.LIGHT) {
+                } else {
+                    if (UserSettings.getInstance().getCurrentTheme() != GameTheme.LIGHT) {
                         UserSettings.getInstance().setTheme(GameTheme.LIGHT);
-                    
+                    }
                 }
 
                 if (audioTab.newVolume != UserSettings.getInstance().getVolume()) {
